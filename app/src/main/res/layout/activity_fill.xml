@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="com.elzen.tara.madlibs.FillActivity">
+
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4689C8"
+        android:textColorHint="#FFF"
+        android:ems="10"
+        android:inputType="textAutoCorrect"
+        android:padding="4dp"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/word_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:layout_marginTop="8dp"
+        android:textSize="30sp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/forward"
+        android:layout_width="77dp"
+        android:layout_height="68dp"
+        android:layout_gravity="end"
+        android:layout_margin="20dp"
+        android:maxWidth="30dp"
+        android:onClick="goToNext"
+        app:srcCompat="@drawable/next" />
+
+</android.support.design.widget.CoordinatorLayout>

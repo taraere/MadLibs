@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name">MadLibs</string>
+    <string name="app_name">Mad Libs</string>
+    <string name="app_title">Mad Libraries</string>
+    <string name="title_activity_fill">Fill in the words</string>
+    <string name="title_activity_story">Your Mad Story \n Is Here!</string>
     <string name="action_settings">Settings</string>
+    <string name="madlib0"></string>
 </resources>
