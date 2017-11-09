@@ -5,18 +5,24 @@ import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 
 
 public class FillActivity extends AppCompatActivity {
-
     private final static String TAG = "MainActivity";
+
     Story story;
     EditText editText;
     TextView wordCount;
@@ -25,6 +31,7 @@ public class FillActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v(TAG, "Inside of onCreate");
         setContentView(R.layout.activity_fill);
         editText = findViewById(R.id.edit_text);
         wordCount = findViewById(R.id.word_count);
@@ -41,18 +48,17 @@ public class FillActivity extends AppCompatActivity {
         }
     }
 
+
     public void goToNext(View view) {
             String text = editText.getText().toString();
             story.fillInPlaceholder(text);
             story.getNextPlaceholder();
-            
             if (story.isFilledIn()) {
                 Intent intent = new Intent(this, StoryActivity.class);
                 intent.putExtra("received_text", story.toString());
                 startActivity(intent);
                 finish();
             }
-
             editText.setText("");
             wordCount.setText(wordCounter());
             placeHolder();
@@ -67,6 +73,29 @@ public class FillActivity extends AppCompatActivity {
     }
 
     public String fileName() {
-        return "madlib" + rnd.nextInt(5) + ".txt";
+        List names = new ArrayList();
+
+        names.add("madlib0_Dance_Monstrosity.txt");
+        names.add("madlib1_Simple_Life.txt");
+        names.add("madlib2_Tarzan.txt");
+        names.add("madlib3_American_Uni.txt");
+        names.add("madlib4_Male_Clothing.txt");
+
+        String item = (String) names.get(rnd.nextInt(5));
+        return item;
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onRestoreInstanceState(outState);
+        outState.putSerializable("coolStoryBruh", story);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle inState) {
+        super.onSaveInstanceState(inState);
+        String text = editText.getText().toString();
+        story.fillInPlaceholder(text);
+        story = (Story) inState.getSerializable("coolStoryBruh");
+        wordCount.setText(wordCounter());
     }
 }
