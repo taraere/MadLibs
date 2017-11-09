@@ -2,6 +2,7 @@ package com.elzen.tara.madlibs;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +22,7 @@ import java.util.Random;
 
 
 public class FillActivity extends AppCompatActivity {
-    private final static String TAG = "MainActivity";
+    private final static String TAG = "FillActivity";
 
     Story story;
     EditText editText;
@@ -31,7 +32,6 @@ public class FillActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v(TAG, "Inside of onCreate");
         setContentView(R.layout.activity_fill);
         editText = findViewById(R.id.edit_text);
         wordCount = findViewById(R.id.word_count);
@@ -50,7 +50,12 @@ public class FillActivity extends AppCompatActivity {
 
 
     public void goToNext(View view) {
-            String text = editText.getText().toString();
+        String text = editText.getText().toString();
+        if (text.length() == 0) {
+            Snackbar.make(view, "Please fill it in!", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+        else {
             story.fillInPlaceholder(text);
             story.getNextPlaceholder();
             if (story.isFilledIn()) {
@@ -62,6 +67,7 @@ public class FillActivity extends AppCompatActivity {
             editText.setText("");
             wordCount.setText(wordCounter());
             placeHolder();
+        }
     }
 
     public void placeHolder() {
@@ -93,9 +99,15 @@ public class FillActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle inState) {
         super.onSaveInstanceState(inState);
-        String text = editText.getText().toString();
-        story.fillInPlaceholder(text);
         story = (Story) inState.getSerializable("coolStoryBruh");
+        String text = editText.getText().toString();
+        if (text.length() == 0) {
+            placeHolder();
+        }
+        else {
+            editText.setText(text);
+        }
         wordCount.setText(wordCounter());
+
     }
 }
